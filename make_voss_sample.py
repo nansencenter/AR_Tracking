@@ -1,6 +1,6 @@
 '''
 make_voss_sample.py
-Loads dpkl data for entire 2014, extracts 4 days of 26th to 29th October
+Loads IVT dpkl data for entire 2014, extracts 4 days of 26th to 29th October
 around Voss event, outputs them as sample for testing.
 
 Written by Stephen Outten August 2019

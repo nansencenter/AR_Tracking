@@ -1,8 +1,7 @@
 '''
 extract_ar.py
-Loads the tracking information produced by ar_tracking.py.
-Reduce to ARs that have minimum persistence in time and identify minimum domain.
-Extract variable over given domain for ARs that meet criteria.
+Loads the tracking information produced by reduce_AR_persist.py.
+Extract variable for ARs that meet perisitence criteria.
 
 Written by Stephen Outten August 2019
 '''
@@ -57,14 +56,6 @@ if __name__ == '__main__':
     fn = FolderNameAR + FileNameAR
     AR_time, AR_len, AR_lon_len, AR_pos, AR_ivt = load_ar_data(fn)
 
-    '''
-    Checked min and max lat and lon using the following:
-      np.nanmax([np.nanmax(AR_pos[ar_persist_ind[i,0]:ar_persist_ind[i,1],:,0]) for i in range(len(ar_persist_ind))])
-      np.nanmax([np.nanmax(AR_pos[ar_persist_ind[i,0]:ar_persist_ind[i,1],:,1]) for i in range(len(ar_persist_ind))])
-    ARs reach the boundaries on all sides except the north, where the boundary is 80 N and the most northern AR 
-    only reaches 77.5 N     
-    Based on this finding, extract the data from the entire domain.
-    '''
 
     # Loop over variables to extrtact and years
     # Load data for current year and extract data for AR times

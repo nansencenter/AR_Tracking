@@ -1,6 +1,7 @@
 # AR_Tracking
 Atmospheric tracking algorithm for ERA5 based on Brands 2017 and Lavers 2012.  
 This code was developed as part of the MUDYFEET project, run by the Bjerknes Centre for Climate Research (BCCR).
+Details of the algorithm and examples of the results are given the the NERSC technical report number 399 provided in this repository.
 
 This code identifies atmospheric rivers (AR) based on the integrated vapour transport (IVT) magnitude and direction.  
 It was designed to work with ERA5 reanalysis to identify ARs in the North Atlantic approaching southern Norway.  
@@ -21,7 +22,7 @@ Calculates the monthly percentiles for every gripoint. This is used by the track
 Main tracking algorithm. Uses triggering and tracking thresholds to identify the track through an AR at every time interval.
 Output is NetCDF containing time of occurence of AR, length of AR, longitudinal extent of AR, IVT along AR track, and lat/lon positions of each point along track. 
 
-**reduce_AR_persist.py**  
+**reduce_ar_persist.py**  
 Reduces the identified ARs based on their persistence in time. Different literature uses different thresholds for how long an AR must persist for it to be considerd an AR. Same output as for ar_tracking.py but with reduced numbers of AR.
 
 **extract_ar.py**  

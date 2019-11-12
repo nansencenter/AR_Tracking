@@ -15,7 +15,7 @@ AR_table array contains
     Mean of distance
 
 Tabulate results sorted by Mean of distance
-Store as dpkl or csv
+Store as dpkl.
 
 Written by Stephen Outten September 2019
 '''
