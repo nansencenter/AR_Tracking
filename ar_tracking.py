@@ -38,6 +38,7 @@ hmax = 9
 Pd = 90    #  Pd and Pt are percentiles that ened tob e calculated for each month and gridpoint ??
 Pt = 75
 minlen = 3000
+reverse_lat = True    # True if latitudes decrease with increasing index
 # **************************************************
 
 
@@ -114,13 +115,17 @@ def convert_dir(ivt_dir):
     ivt_dir[(ivt_dir>292.5) & (ivt_dir<=337.5)] = 8
     
 
-def track_ar_step(ind, ivt_grid, ivt_dir_point):
+def track_ar_step(ind, ivt_grid, ivt_dir_point, reverse_lat):
     '''
-    new_ivt, new_ind = track_ar_step(ind, ivt_grid, ivt_dir_point)
+    new_ivt, new_ind = track_ar_step(ind, ivt_grid, ivt_dir_point, reverse_lat)
         Takes in the current location, ivt in 3x3 grid around point, and ivt_dir in grid point. 
+        Reverse_lat should be True if latitudes decrease with increasing index, as with ERA5.
         Returns the next grid point point along the ar. 
     '''
-    ind_mod = [-1,-1], [-1,0], [-1,1], [0,1], [1,1], [1,0], [1,-1], [0,-1], [-1,-1], [-1,0]
+    if reverse_lat:
+        ind_mod = [-1,-1], [-1,0], [-1,1], [0,1], [1,1], [1,0], [1,-1], [0,-1], [-1,-1], [-1,0]
+    else:
+        ind_mod = [1,-1], [1,0], [1,1], [0,1], [-1,1], [-1,0], [-1,-1], [0,-1], [1,-1], [1,0]
     ind_pos = np.array(ind_mod[ivt_dir_point-1:ivt_dir_point+2])
     ivt_pos = [ivt_grid[1+ind_pos[0][0],1+ind_pos[0][1]], ivt_grid[1+ind_pos[1][0],1+ind_pos[1][1]], ivt_grid[1+ind_pos[2][0],1+ind_pos[2][1]]]
     new_ind = ind + ind_pos[np.argmax(ivt_pos)]
@@ -187,7 +192,7 @@ if __name__ == '__main__':
                 ivt_grid = ivt[lnii[0], ind[0]-1:ind[0]+2, ind[1]-1:ind[1]+2]     # pull out 3x3 grid
                 ivt_dir_point = ivt_dir[lnii[0], ind[0], ind[1]].astype('int')       # pull out dir at grid point
                 if ivt_grid.shape == (3,3):                    # This accounts for hittig edge of domain
-                    new_ivt, new_ind = track_ar_step(ind, ivt_grid, ivt_dir_point)
+                    new_ivt, new_ind = track_ar_step(ind, ivt_grid, ivt_dir_point, reverse_lat)
                 else:
                     found_ar = False
                     break
